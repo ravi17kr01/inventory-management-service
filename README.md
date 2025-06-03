@@ -67,32 +67,3 @@ Here you will find all available API endpoints with parameters and responses.
 🔐 Note: For authenticated routes, click "Authorize" button and enter the token in this format:
 
 Bearer <your_token_here>
-
-📂 Project Structure
-
-.
-├── app.js
-├── .env
-├── .gitignore
-├── config
-│   ├── db.js
-│   └── swagger.js
-├── controllers
-│   ├── authController.js
-│   └── itemController.js
-├── middleware
-│   ├── authMiddleware.js
-│   └── errorHandler.js
-├── models
-│   ├── User.js
-│   └── Item.js
-├── routes
-│   ├── authRoutes.js
-│   └── itemRoutes.js
-├── utils
-│   └── logger.js
-├── logs
-│   ├── error.log
-│   └── combined.log
-└── package.json
-
