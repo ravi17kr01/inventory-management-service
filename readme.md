@@ -42,57 +42,35 @@ cd inventory-management-service
 
 ### 2. Install Deoendencies
 
+```bash
 npm install
+```
 
 ### 3. Create .env File
 
+```bash
 PORT=8080
 MONGO_URI=your_mongodb_connection_string e.g., mongodb://localhost:27017/inventorydb
 JWT_SECRET=your_jwt_secret_key
+```
 
 ### 4. Start the Server
 
+```bash
 npm run dev
+```
 
 The server will run on http://localhost:8080
 
 ### 5. Swagger API Docs
 
 After starting the server, go to:
-
+```bash
 👉 http://localhost:8080/api-docs
+```
 
 Here you will find all available API endpoints with parameters and responses.
 
 🔐 Note: For authenticated routes, click "Authorize" button and enter the token in this format:
 
 Bearer <your_token_here>
-
-📂 Project Structure
-
-.
-├── app.js
-├── .env
-├── .gitignore
-├── config
-│   ├── db.js
-│   └── swagger.js
-├── controllers
-│   ├── authController.js
-│   └── itemController.js
-├── middleware
-│   ├── authMiddleware.js
-│   └── errorHandler.js
-├── models
-│   ├── User.js
-│   └── Item.js
-├── routes
-│   ├── authRoutes.js
-│   └── itemRoutes.js
-├── utils
-│   └── logger.js
-├── logs
-│   ├── error.log
-│   └── combined.log
-└── package.json
-
