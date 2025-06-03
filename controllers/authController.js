@@ -12,7 +12,7 @@ const signUp = async(req, res) => {
         //validating inputs
         if(!username || !password){
             logger.warn('Signup validation failed: username or password missing');
-            return res.status(400).json({message: "Username and password required!"});
+            return res.status(400).json({message: "Username and password required!", success: false});
         }
         
         //check if user already exists
@@ -20,7 +20,7 @@ const signUp = async(req, res) => {
 
         if(userExists){
             logger.warn(`Signup failed: Username '${username}' already exists`);
-            return res.status(400).json({message: "Username already exists!"})
+            return res.status(400).json({message: "Username already exists!", success: false})
         }
 
         //if user doesn't exists, then hash the password and create new entry for that user 
@@ -29,7 +29,7 @@ const signUp = async(req, res) => {
         await user.save();
 
         logger.info(`User '${username}' registered successfully`);
-        res.status(200).json({message: "User registered successfully!"});
+        res.status(200).json({message: "User registered successfully!", success: true});
 
     } catch (error) {
         logger.error('Error during signup', { error });
@@ -47,7 +47,7 @@ const login = async (req, res) => {
         //validating inputs
         if(!username || !password){
             logger.warn('Login validation failed: username or password missing');
-            return res.status(400).json({message: "Username and password required!"});
+            return res.status(400).json({ message: "Username and password required!", success: false });
         }
     
         //checking in DB
@@ -55,21 +55,21 @@ const login = async (req, res) => {
     
         if(!user){
             logger.warn(`Login failed: Invalid username '${username}'`);
-            return res.status(400).json({message: "Invalid username!"});
+            return res.status(400).json({ message: "Invalid username!", success: false });
         }
     
         const passwordMatched = await bcrypt.compare(password, user.password);
     
         if(!passwordMatched){
             logger.warn(`Login failed: Invalid password for username '${username}'`);
-            return res.status(400).json({message: "Invalid password!"})
+            return res.status(400).json({ message: "Invalid password!", success: false })
         }
     
         //returning auth token for subsequent api request 
         const token = jwt.sign({id: user?._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
         
         logger.info(`User '${username}' logged in successfully`);
-        res.status(200).json({message: "Logged in succesfully!", token: token}); 
+        res.status(200).json({ token: token, message: "Logged in succesfully!", success: true }); 
 
     } catch (error) {
         logger.error('Error during login', { error });        

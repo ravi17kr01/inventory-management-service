@@ -1,5 +1,6 @@
 const Item = require('../models/Item');
 const logger = require('../utils/logger');
+const mongoose = require('mongoose');
 
 /*******Create Method*******/
 const createItem = async (req, res) => {
@@ -8,17 +9,37 @@ const createItem = async (req, res) => {
         logger.info('Create item request received', { name, quantity });
 
         //validating inputs
-        if(!name || quantity == null){
+        if(!name || quantity == null || !quantity){
             logger.warn('Create Item: Missing name or quantity');
-            return res.status(400).json({message: "Name and quantity are required!"});
+            return res.status(400).json({message: "Name and quantity are required!", success: false});
+        }
+
+        const numericQuantity = Number(quantity);
+
+        //handle negative quantity
+        if(Number.isNaN(numericQuantity) || numericQuantity < 0){
+            logger.warn('Negative Quantity: Please enter a valid quantity!');
+            return res.status(400).json({message: "Please enter a valid (non-negative) quantity!", success: false});
+        }
+
+        // Check if item already exists for this user
+        const existingItem = await Item.findOne({ name: name, userId: req?.user?.id });
+
+        if (existingItem) {
+            // Update existing item's quantity
+            existingItem.quantity = Number(existingItem?.quantity) + Number(quantity);
+            await existingItem.save();
+
+            logger.info(`Item quantity updated: ${existingItem._id}`);
+            return res.status(200).json({ data: existingItem, message: "Item quantity updated successfully!", success: true });
         }
 
         //add new item into db
-        const newItem = new Item({name: name, quantity: quantity, user: req.user.id});
+        const newItem = new Item({name: name, quantity: numericQuantity, userId: req?.user?.id});
         await newItem.save();
 
         logger.info(`Item created successfully: ${newItem._id}`);
-        res.status(200).json(newItem);
+        res.status(200).json({ data: newItem, message: "Item created successfully!", success: true });
 
     } catch (error) {
         logger.error("Create Item Error", { error: error.message, stack: error.stack });
@@ -35,14 +56,14 @@ const getItemById = async (req, res) => {
         //validating inputs
         if(!userId){
             logger.error('Get items: User ID not found in request');
-            return res.status(500).json({message: "User Id not found!"})
+            return res.status(500).json({message: "User Id not found!", success: false})
         }
 
         //fetch items from db
-        const items = await Item.find({user: userId});
+        const items = await Item.find({userId: userId});
         logger.info(`Fetched ${items.length} items for user ${userId}`);
 
-        res.status(200).json(items);
+        res.status(200).json({ data: items, message: "Items fetched successfully!", success: true });
 
     } catch (error) {
         logger.error("Get Items Error", { error: error.message, stack: error.stack });
@@ -60,7 +81,20 @@ const updateItem = async (req, res) => {
         //validating inputs
         if(!id){
             logger.warn('Update Item: Missing item ID');
-            return res.staus(400).json({message: "Id not found!"});
+            return res.staus(400).json({ message: "Id not found!", success: false });
+        }
+
+        //validating mongo object id
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid ID format', success: false });
+        }
+
+        const numericQuantity = Number(quantity);
+
+        //handle negative quantity
+        if(Number.isNaN(numericQuantity) || numericQuantity < 0){
+            logger.warn('Negative Quantity: Please enter a valid quantity!');
+            return res.status(400).json({message: "Please enter a valid (non-negative) quantity!", success: false});
         }
 
         //check if item exists
@@ -68,7 +102,7 @@ const updateItem = async (req, res) => {
 
         if(!item){
             logger.warn(`Update Item: Item not found with id ${id}`);
-            return res.status(400).json({message: "Item not found!"});
+            return res.status(400).json({ message: "Item not found!", success: false });
         }
 
         if(name){
@@ -76,14 +110,14 @@ const updateItem = async (req, res) => {
         }
 
         if(quantity != null){
-            item.quantity = quantity;
+            item.quantity = numericQuantity;
         }
 
         //updating in DB
         await item.save();
         
         logger.info(`Item updated successfully: ${id}`);
-        res.status(200).json(item);
+        res.status(200).json({ data: item, message: "Item updated successfully!", success: true });
 
     } catch (error) {
         logger.error("Update Item Error", { error: error.message, stack: error.stack });
@@ -100,7 +134,12 @@ const deleteItem = async (req, res) => {
         //validating inputs
         if(!id){
             logger.warn('Delete Item: Missing item ID');
-            return res.status(400).json({message: "Id not found!"})
+            return res.status(400).json({message: "Id not found!", success: false})
+        }
+
+        //validating mongo object id
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid ID format', success: false });
         }
 
         //check in DB
@@ -108,11 +147,11 @@ const deleteItem = async (req, res) => {
 
         if(!item){
             logger.warn(`Delete Item: Item not found with id ${id}`);
-            return res.json({message: "Item not found!"});
+            return res.json({message: "Item not found!", success: false});
         }
 
         logger.info(`Item deleted successfully: ${id}`);
-        res.status(200).json({message: "Item deleted succsessfully!"});
+        res.status(200).json({message: "Item deleted succsessfully!", success: true});
         
     } catch (error) {
         logger.error("Delete Item Error", { error: error.message, stack: error.stack });

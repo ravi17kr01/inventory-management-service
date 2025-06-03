@@ -8,18 +8,18 @@ const  { createItem, getItemById, updateItem, deleteItem } = require('../control
  * tags:
  *   name: Inventory Management
  */
-router.use(authMiddleware)
+
 //create item route
-router.post('/', createItem);
+router.post('/', authMiddleware, createItem);
 
 //get item by id route
-router.get('/',  getItemById);
+router.get('/', authMiddleware, getItemById);
 
 //update item route
-router.put('/:id', updateItem);
+router.put('/:id', authMiddleware, updateItem);
 
 //delete item route
-router.delete('/:id', deleteItem);
+router.delete('/:id', authMiddleware, deleteItem);
 
 /**
  * @swagger
