@@ -69,6 +69,4 @@ After starting the server, go to:
 
 Here you will find all the available API endpoints with parameters and responses.
 
-🔐 Note: For authenticated routes, click "Authorize" button and enter the token in this format:
-
-Bearer <your_token_here>
+🔐 Note: For authenticated routes, click "Authorize" button and enter the token value from login route's response:
