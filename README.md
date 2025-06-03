@@ -40,7 +40,7 @@ git clone https://github.com/your-username/inventory-management-service.git
 cd inventory-management-service
 ```
 
-### 2. Install Deoendencies
+### 2. Install Dependencies
 
 ```bash
 npm install
@@ -67,7 +67,7 @@ After starting the server, go to:
 
 👉 http://localhost:8080/api-docs
 
-Here you will find all available API endpoints with parameters and responses.
+Here you will find all the available API endpoints with parameters and responses.
 
 🔐 Note: For authenticated routes, click "Authorize" button and enter the token in this format:
 
