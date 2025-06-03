@@ -4,7 +4,7 @@ This is a simple **Inventory Management API** that allows users to sign up, log 
 
 ---
 
-## Features
+## ✨ Features
 
 - **User Authentication (JWT based)**
 - **Item CRUD operations** (Create, Read, Update, Delete)
@@ -16,7 +16,7 @@ This is a simple **Inventory Management API** that allows users to sign up, log 
 
 ---
 
-## 🛠 Tools & Technologies Used
+## 🛠️ Tools & Technologies Used
 
 - **Node.js** + **Express.js**
 - **MongoDB** + **Mongoose**
@@ -29,7 +29,7 @@ This is a simple **Inventory Management API** that allows users to sign up, log 
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 Follow these steps to run the project locally:
 
@@ -42,18 +42,23 @@ cd inventory-management-service
 
 ### 2. Install Deoendencies
 
+```bash
 npm install
+```
 
 ### 3. Create .env File
 
+```bash
 PORT=8080
 MONGO_URI=your_mongodb_connection_string e.g., mongodb://localhost:27017/inventorydb
 JWT_SECRET=your_jwt_secret_key
+```
 
 ### 4. Start the Server
 
+```bash
 npm run dev
-
+```
 The server will run on http://localhost:8080
 
 ### 5. Swagger API Docs
