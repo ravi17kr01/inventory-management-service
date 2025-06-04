@@ -37,6 +37,8 @@ Follow these steps to run the project locally:
 
 ```bash
 git clone https://github.com/your-username/inventory-management-service.git
+```
+```bash
 cd inventory-management-service
 ```
 
