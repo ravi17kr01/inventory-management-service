@@ -52,7 +52,7 @@ npm install
 
 ```bash
 PORT=8080
-MONGO_URI=your_mongodb_connection_string e.g., mongodb://localhost:27017/inventorydb
+MONGO_URI=mongodb://localhost:27017/inventorydb ### your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 ```
 
