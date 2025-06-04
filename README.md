@@ -37,6 +37,8 @@ Follow these steps to run the project locally:
 
 ```bash
 git clone https://github.com/your-username/inventory-management-service.git
+```
+```bash
 cd inventory-management-service
 ```
 
@@ -50,14 +52,14 @@ npm install
 
 ```bash
 PORT=8080
-MONGO_URI=your_mongodb_connection_string e.g., mongodb://localhost:27017/inventorydb
+MONGO_URI=mongodb://localhost:27017/inventorydb ### your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 ```
 
 ### 4. Start the Server
 
 ```bash
-npm run dev
+npm start
 ```
 The server will run on http://localhost:8080
 
@@ -69,7 +71,7 @@ After starting the server, go to:
 
 Here you will find all the available API endpoints with parameters and responses.
 
-🔐 Note: For authenticated routes, click "Authorize" button and enter the token in this format:
+🔐 Note: For authenticated routes, click "Authorize" button and enter the token value from login route's response:
 
 Bearer <your_token_here>
 
@@ -95,4 +97,3 @@ To run the application using Docker:
    Swagger Docs: http://localhost:8080/api-docs
    
    MongoDB: Accessible internally via mongo:27017 or externally via localhost:27018 (if port is exposed)
-
