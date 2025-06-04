@@ -72,3 +72,27 @@ Here you will find all the available API endpoints with parameters and responses
 🔐 Note: For authenticated routes, click "Authorize" button and enter the token in this format:
 
 Bearer <your_token_here>
+
+### 🐳 Run with Docker (Optional)
+
+To run the application using Docker:
+
+1. Create a .env file
+    ```bash
+    PORT=8080
+    MONGO_URI=mongodb://mongo:27017/inventorydb
+    JWT_SECRET=your_jwt_secret
+    ```
+
+2. Build and start the services
+   ```bash
+   docker-compose up --build
+   ```
+
+3. Access the services
+   BASE URL: http://localhost:8080
+   
+   Swagger Docs: http://localhost:8080/api-docs
+   
+   MongoDB: Accessible internally via mongo:27017 or externally via localhost:27018 (if port is exposed)
+

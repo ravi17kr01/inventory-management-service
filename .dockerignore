@@ -1,0 +1,27 @@
+# Ignore dependencies already installed in container
+node_modules
+
+# Ignore logs
+logs
+*.log
+
+# Ignore environment files
+.env
+
+# Ignore local dev configs and metadata
+.vscode
+*.swp
+*.swo
+
+# Ignore Docker-related files (not needed in container)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Ignore Git stuff
+.git
+.gitignore
+
+# Ignore documentation and markdown files
+README.md
+*.md
