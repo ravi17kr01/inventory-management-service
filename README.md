@@ -97,3 +97,5 @@ To run the application using Docker:
    Swagger Docs: http://localhost:8080/api-docs
    
    MongoDB: Accessible internally via mongo:27017 or externally via localhost:27018 (if port is exposed)
+
+   ![image](https://github.com/user-attachments/assets/cb6e0148-dd92-4282-9fdc-7b93a322d61c)
